@@ -1,13 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '../views/Login.vue'
+import HomeMovies from '../views/HomeMovies.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Home Movies',
+      component: HomeMovies,
+      beforeEnter: (to, from, next) => {
+        if (JSON.parse(localStorage.getItem('user'))?.token) {
+          next();
+        } else {
+          next('/login');
+        }
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/about',
