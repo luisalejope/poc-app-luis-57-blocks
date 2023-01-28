@@ -1,7 +1,7 @@
-import {users} from '../data/users';
+import { users } from '../data/users';
 
 export default {
-  authenticate({email, password}) {
+  authenticate({ email, password }) {
     const userAuth = users.filter((user) => user.email === email && user.password === password);
     if (userAuth?.length === 0) {
       return false;
@@ -12,6 +12,10 @@ export default {
       token: userAuth[0].token
     };
     return newUser;
-    
+
   },
+  userExists(token) {
+    const userExist = users.findIndex((user) =>  user.token === token );
+    return userExist > -1
+  }
 };

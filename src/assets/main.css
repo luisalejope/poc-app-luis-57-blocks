@@ -22,3 +22,9 @@ button:focus {
 #app{
   width: 100%;
 }
+.template-app{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}

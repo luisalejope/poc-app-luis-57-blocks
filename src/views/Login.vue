@@ -2,28 +2,31 @@
 import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
 import {useRouter} from 'vue-router';
+
 import { userStore } from '../stores/user'
 import IconEyeOpen from '../components/icons/IconEyeOpen.vue';
 import IconEyeClosed from '../components/icons/IconEyeClosed.vue';
 import Button from '../components/global/Button.vue';
 
-const store = userStore();
+// ROUTER
 const router = useRouter();
+
+// STORES
+const store = userStore();
 
 const { user, getUser } = storeToRefs(store)
 const { authenticateUser } = store
 
-// data
+// DATA
 const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
 
-// computed
+// COMPUTED
 const emailSyntaxis = computed(()=>{
   const regexp = /\S+@\S+\.\S+/;
   return regexp.test(String(email.value).toLowerCase());
 })
-
 
 const formCompleted = computed(()=> {
   const isCompleted = email.value.length > 0 && password.value.length > 0;
@@ -31,25 +34,21 @@ const formCompleted = computed(()=> {
   return isCompleted && emailSyntaxis.value;
 })
 
-// methods:
+// METHODS:
 const handleShowPass = () => showPassword.value = !showPassword.value;
 
-const handleSubmit = async () => {
-  try {
+const handleSubmit = () => { 
     const loginData = {
       email: email.value,
       password: password.value
     }
-    const response = await authenticateUser(loginData);
+    const response = authenticateUser(loginData);
     console.log(response, 'login');
     if (!response) {
       console.log(response, 'error');
     } else {
       router.push('/')
     }
-  } catch (error) {
-    console.error(error)
-  }
 }
 </script>
 
