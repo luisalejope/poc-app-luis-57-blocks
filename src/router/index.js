@@ -8,6 +8,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: JSON.parse(localStorage.getItem('user'))?.token ? '/home' : '/login',
+    },
+    {
+      path: '/home',
       name: 'Home Movies',
       component: HomeMovies,
       beforeEnter: (to, from, next) => {

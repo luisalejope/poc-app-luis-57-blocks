@@ -1,16 +1,11 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
-import { loaderStore } from '../stores/loader'
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 import Repository from '../repositories/RepositoryFactory';
 
 const auth = Repository.get('auth');
 
 
 export const userStore = defineStore('user', () => {
-  // STORES
-  const loadStore = loaderStore();
-
-  const { handlerLoader } = loadStore;
 
   // DATA
   const user = ref({});
