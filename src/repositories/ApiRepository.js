@@ -1,7 +1,7 @@
 import ApiClient from './clients/ApiClient';
 
 export default {
-  getAllMovies() {
+  getAllMoviesByPage() {
     return ApiClient.get('/movies');
   },
   getMoviesByPage(page) {

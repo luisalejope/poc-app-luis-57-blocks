@@ -1,36 +1,45 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
 import { moviesStore } from '@/stores/movies';
+import List from '../components/global/List.vue';
 
 
 const movies = moviesStore();
 
-const { getAllMovies } = storeToRefs(movies);
-const { requestMovies, requestMoviesByPage } = movies;
+const { numberMovies, getAllMoviesByPage } = storeToRefs(movies);
+const { requestMoviesByPage } = movies;
 
-const numberPage = ref(0)
+const numberPage = ref(1)
 
 onBeforeMount(() => {
-    requestMoviesByPage(1);
+    requestMoviesByPage(numberPage.value);
 })
 
-const handlePaginate = async () => {
-    try {
-        await requestMoviesByPage(numberPage.value + 2);
-        numberPage.value += 1;
-    } catch (error) {
-        console.log(error)
+const isVisibleNext = computed(()=> numberPage.value <  numberMovies.value / 20)
+const isVisibleBack = computed(()=> numberPage.value >  1)
+
+const handlePaginate = async (type) => {
+    if(type === 'next') {
+        try {
+            await requestMoviesByPage(numberPage.value+1);
+            numberPage.value += 1;
+        } catch (error) {
+            console.log(error)
+        }
+    } else {
+        numberPage.value -= 1;
     }
 }
 </script>
 
 <template>
-    <div>
-        <div v-for=" movie of getAllMovies[numberPage]" :key="movie.id">
-            {{ movie.title }}
-        </div>
-        <button @click="handlePaginate">
+    <div id="home-movies">
+        <List :list="getAllMoviesByPage[numberPage-1] || []" :page="numberPage"/>
+        <button @click="handlePaginate('back')" v-show="isVisibleBack">
+            back
+        </button>
+        <button @click="handlePaginate('next')" v-show="isVisibleNext">
             next
         </button>
     </div>
@@ -38,5 +47,10 @@ const handlePaginate = async () => {
 
 
 <style scoped>
-
+#home-movies{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 </style>
