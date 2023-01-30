@@ -47,7 +47,7 @@ const handleSubmit = () => {
     if (!response) {
       console.log(response, 'error');
     } else {
-      router.push('/')
+      router.push('/home')
     }
 }
 </script>

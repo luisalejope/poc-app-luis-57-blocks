@@ -13,7 +13,7 @@ import desktopLogo from "../assets/logoPortafolio1.png";
             <nav class="navContainer">
                 <div class="routes">
 
-                    <RouterLink class="linkNav" to="/" exactActiveClass="active">
+                    <RouterLink class="linkNav" to="/home" exactActiveClass="active">
                         Home
                     </RouterLink>
                     <RouterLink class="linkNav" to="/favorites" exactActiveClass="active">

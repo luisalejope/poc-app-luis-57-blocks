@@ -22,6 +22,7 @@ const authenticated = ref(true)
 
 onBeforeMount(() => {
   authenticated.value = userExist()
+  console.log('onbefore', authenticated.value)
   if (!authenticated.value && router.currentRoute.value.name !== 'login') {
     router.push('/login')
   }
