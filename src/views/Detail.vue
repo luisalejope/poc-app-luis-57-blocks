@@ -35,6 +35,7 @@ onBeforeMount(() => {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    animation: move-left 2s linear reverse;
 }
 
 .detail-container {
@@ -52,6 +53,15 @@ onBeforeMount(() => {
 .detail-container>p {
     margin: 20px 0;
     font-size: 30px;
+}
+
+@keyframes move-left {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
 }
 
 @media (max-width: 600px) {

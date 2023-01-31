@@ -26,7 +26,7 @@ const handlePaginate = async (type) => {
 </script>
 
 <template>
-    <div id="home-movies">
+    <div id="favorites">
         <div class="container-buttons mt-l">
             <div>
                 <Button button-type="secondary font-size-bg" text="&#9754;" @action="handlePaginate('back')"
@@ -57,12 +57,17 @@ const handlePaginate = async (type) => {
 
 
 <style scoped>
-#home-movies {
+#favorites {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    -webkit-animation: bounce-in 1s ease 0s 1 normal;
+    -moz-animation: bounce-in 1s ease 0s 1 normal;
+    -ms-animation: bounce-in 1s ease 0s 1 normal;
+    animation: bounce-in 1s ease 0s 1 normal;
 }
+
 .container-buttons {
     display: grid;
     width: 50%;

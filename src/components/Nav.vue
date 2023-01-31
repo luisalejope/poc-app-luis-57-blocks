@@ -12,13 +12,13 @@ const { user, userExist } = storeToRefs(userstore);
 
 const { logout } = userstore;
 
-const routeLogin = computed(()=> route.name === 'Login')
+const routeLogin = computed(() => route.name === 'Login')
 
 const handleBackward = () => {
     router.back()
 }
 
-const handleLogout = () =>{
+const handleLogout = () => {
     logout()
     router.push('/login')
 }
@@ -30,11 +30,11 @@ const handleLogout = () =>{
 
             <nav class="navContainer">
                 <div class="backwards-container" v-if="route.name === 'Detail'">
-                        <Button buttonType="primary font-size-bg" text="&#9754;" @action="handleBackward"/>    
-                        <h2>
-                            Detail
-                        </h2>
-                    </div>
+                    <Button buttonType="primary font-size-bg" text="&#9754;" @action="handleBackward" />
+                    <h2>
+                        Detail
+                    </h2>
+                </div>
                 <div class="routes" v-else>
                     <div class="router-links">
                         <RouterLink class="linkNav" to="/home" exactActiveClass="active">
@@ -45,7 +45,7 @@ const handleLogout = () =>{
                         </RouterLink>
                     </div>
                     <div class="logout-container">
-                        <Button buttonType="primary" text="Logout" @action="handleLogout"/>
+                        <Button buttonType="primary" text="Logout" @action="handleLogout" />
                     </div>
                 </div>
             </nav>
@@ -65,22 +65,27 @@ const handleLogout = () =>{
     box-shadow: 0px 3px 13px -5px rgba(0, 0, 0, 0.42);
 }
 
-.backwards-container{
+.backwards-container {
     width: 120px;
+    animation: move-left 2s linear reverse;
+
 }
 
-.backwards-container > h2 {
+.backwards-container>h2 {
     margin-left: 1rem;
 }
-.logout-container{
+
+.logout-container {
     width: 70px;
 }
+
 .navContainer {
     width: 90%;
     display: flex;
 }
 
-.router-links, .backwards-container {
+.router-links,
+.backwards-container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -107,5 +112,14 @@ const handleLogout = () =>{
 
 .active {
     color: rgb(0, 75, 173);
+}
+
+@keyframes move-left {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
 }
 </style>

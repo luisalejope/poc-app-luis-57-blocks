@@ -21,7 +21,7 @@ const handleClick = () => emit('action')
 
 </script>
 <template >
-    <button id="button" :class="`${buttonType} ${disabled && 'disabled'}`" :disabled="disabled" @click="handleClick">{{ text }}</button>
+    <button id="button" :class="`${buttonType} ${disabled ? 'disabled' : ''}`" :disabled="disabled" @click="handleClick">{{ text }}</button>
 </template>
 <style scoped>
 #button {

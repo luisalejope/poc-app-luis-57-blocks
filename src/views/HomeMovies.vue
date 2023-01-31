@@ -71,6 +71,10 @@ const handlePaginate = async (type) => {
     display: flex;
     flex-direction: column;
     align-items: center;
+    -webkit-animation: bounce-in 1s ease 0s 1 normal;
+    -moz-animation: bounce-in 1s ease 0s 1 normal;
+    -ms-animation: bounce-in 1s ease 0s 1 normal;
+    animation: bounce-in 1s ease 0s 1 normal;
 }
 
 .container-buttons {
@@ -82,6 +86,7 @@ const handlePaginate = async (type) => {
 .principal-title {
     text-align: center;
 }
+
 
 @media (max-width: 600px) {
     .container-buttons {
