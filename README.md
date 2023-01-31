@@ -1,6 +1,5 @@
 # poc-app-luis-57-blocks
 
-This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
@@ -11,19 +10,54 @@ This template should help get you started developing with Vue 3 in Vite.
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
-
+With npm
 ```sh
 npm install
 ```
+with yarn
+```sh
+yarn
+```
 
 ### Compile and Hot-Reload for Development
-
+With npm
 ```sh
 npm run dev
 ```
+with yarn
+```sh
+yarn dev
+```
 
 ### Compile and Minify for Production
-
+With npm
 ```sh
 npm run build
+```
+with yarn
+```sh
+yarn build
+```
+### When is running
+The users that can be used with the app are the following ones
+```sh
+email:'tony@gmail.com', 
+password:'Jarvis25*',
+```
+```sh
+email:'tony@gmail.com', 
+password:'Jarvis25*',
+```
+```sh
+email:'tony@gmail.com', 
+password:'Jarvis25*',
+```
+If you want to try with other credentias, you cannot be logged in.
+These users can be used on develop or production enviroment
+
+### Production
+This web app is deployed using Netlify
+You can access to it with the next URL
+```sh
+https://develop--peppy-treacle-f12701.netlify.app/login
 ```
