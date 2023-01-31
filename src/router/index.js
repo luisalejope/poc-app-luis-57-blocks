@@ -8,6 +8,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      meta: { requiresAuth: false },
+      redirect: '/login'
+    },
+    {
       path: '/home',
       name: 'Home Movies',
       meta: { requiresAuth: true },
