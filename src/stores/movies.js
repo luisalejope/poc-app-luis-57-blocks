@@ -1,15 +1,15 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { loaderStore } from './loader';
-import Repository from '../repositories/RepositoryFactory';
+import { useLoaderStore } from './loader';
+import Repository from '../services/RepositoryFactory';
 
 const apiRest = Repository.get('api');
 
 
-export const moviesStore = defineStore('movies', () => {
+export const useMovieStore = defineStore('movies', () => {
 
   // STORES
-  const loadStore = loaderStore();
+  const loadStore = useLoaderStore();
   const { handlerLoader } = loadStore;
 
   // DATA
@@ -36,14 +36,14 @@ export const moviesStore = defineStore('movies', () => {
       try {
         handlerLoader();
         const response = await apiRest.getMoviesByPage(page);
-        console.log(response);
         const newPageMovies = response.data.map((movie) => {
           return { ...movie, favorite: false };
         })
         movies.value = [...movies.value, ...newPageMovies];
         numberMovies.value = Number(response.headers['x-total-count']);
+        return response
       } catch (error) {
-        console.error(error);
+       return error
       } finally {
         handlerLoader()
       }
@@ -61,7 +61,7 @@ export const moviesStore = defineStore('movies', () => {
   }
 
   function assignFavorite(data) {
-    console.log(data)
+    
     movies.value =  movies.value.map((movie) => {
       if (movie.id === data.id) {
         movie = data;
@@ -71,10 +71,9 @@ export const moviesStore = defineStore('movies', () => {
   }
 
   function getMovieByID(id) {
-    console.log(typeof id)
     const movieById =  movies.value.filter((movie) => movie.id === id)
     return movieById[0];
   }
 
-  return { numberMovies, numberFavorites, getAllMoviesByPage, getFavoritesByPage, requestMoviesByPage, assignFavorite, getMovieByID }
+  return { movies, numberMovies, numberFavorites, getAllMoviesByPage, getFavoritesByPage, requestMoviesByPage, assignFavorite, getMovieByID }
 })

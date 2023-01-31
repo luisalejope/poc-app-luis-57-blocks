@@ -1,20 +1,27 @@
 <script setup>
 import { onBeforeMount, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
-import { moviesStore } from '@/stores/movies';
+import { useMovieStore } from '@/stores/movies';
 import List from '../components/global/List.vue';
 import Button from '../components/global/Button.vue';
 
 
-const movies = moviesStore();
+const movies = useMovieStore();
 
 const { numberMovies, getAllMoviesByPage } = storeToRefs(movies);
 const { requestMoviesByPage } = movies;
 
-const numberPage = ref(1)
+const numberPage = ref(1);
+const errorMessage = ref(false);
 
-onBeforeMount(() => {
-    requestMoviesByPage(numberPage.value);
+onBeforeMount(async () => {
+    try {
+        errorMessage.value = false;
+        await requestMoviesByPage(numberPage.value);
+            
+        } catch (error) {
+            errorMessage.value = true;
+        }
 })
 
 const isVisibleNext = computed(() => numberPage.value < numberMovies.value / 20)
@@ -23,10 +30,11 @@ const isVisibleBack = computed(() => numberPage.value > 1)
 const handlePaginate = async (type) => {
     if (type === 'next') {
         try {
+            errorMessage.value = false;
             await requestMoviesByPage(numberPage.value + 1);
             numberPage.value += 1;
         } catch (error) {
-            console.log(error)
+            errorMessage.value = true;
         }
     } else {
         numberPage.value -= 1;
@@ -48,6 +56,11 @@ const handlePaginate = async (type) => {
                 <Button button-type="secondary font-size-bg " text="&#9755;" @action="handlePaginate('next')"
                     v-show="isVisibleNext" />
             </div>
+        </div>
+        <div class="error-message mt-xxl" v-show="errorMessage">
+            <p>
+                It seems to be a problem! Try Later
+            </p>
         </div>
         <List :list="getAllMoviesByPage[numberPage - 1] || []" :page="numberPage" />
         <div class="container-buttons">
@@ -88,8 +101,26 @@ const handlePaginate = async (type) => {
 }
 
 
+.error-message {
+    display: flex;
+    background-color: #ff9999;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 60px;
+    border: 1px solid #cacaca;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px 0px rgba(134, 134, 134, 0.21);
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    }
+
+
 @media (max-width: 600px) {
     .container-buttons {
+        width: 90%;
+    }
+    .error-message {
         width: 90%;
     }
 }

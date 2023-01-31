@@ -1,11 +1,11 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import Repository from '../repositories/RepositoryFactory';
+import Repository from '../services/RepositoryFactory';
 
 const auth = Repository.get('auth');
 
 
-export const userStore = defineStore('user', () => {
+export const useUserStore = defineStore('user', () => {
 
   // DATA
   const user = ref({});
@@ -17,12 +17,10 @@ export const userStore = defineStore('user', () => {
 
   // METHODS
   function authenticateUser(data) {
-    console.log(data)
     const newUser = auth.authenticate(data)
     if (!newUser) {
       return false
     }
-    console.log(newUser, 'store')
     user.value = newUser
     const r = {
       status: 200,

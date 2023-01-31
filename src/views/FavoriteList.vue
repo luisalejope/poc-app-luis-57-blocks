@@ -1,12 +1,12 @@
 <script setup>
 import { onBeforeMount, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
-import { moviesStore } from '@/stores/movies';
+import { useMovieStore } from '@/stores/movies';
 import List from '../components/global/List.vue';
 import Button from '../components/global/Button.vue';
 
 
-const movies = moviesStore();
+const movies = useMovieStore();
 
 const { numberFavorites, getFavoritesByPage } = storeToRefs(movies);
 
@@ -39,6 +39,11 @@ const handlePaginate = async (type) => {
                 <Button button-type="secondary font-size-bg " text="&#9755;" @action="handlePaginate('next')"
                     v-show="isVisibleNext" />
             </div>
+        </div>
+        <div class="favorite-empty mt-xxl" v-show="getFavoritesByPage.length === 0">
+            <p>
+                There are no Favorite movies
+            </p>
         </div>
         <List :list="getFavoritesByPage[numberPage - 1] || []" :page="numberPage" />
         <div class="container-buttons">
@@ -74,12 +79,29 @@ const handlePaginate = async (type) => {
     grid-template-columns: 40px auto 40px;
 }
 
+.favorite-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 60px;
+    border: 1px solid #C5C5C5;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px 0px rgba(134, 134, 134, 0.21);
+    font-size: 2rem;
+    color: rgb(0, 75, 173);
+}
+
 .principal-title {
     text-align: center;
 }
 
 @media (max-width: 600px) {
     .container-buttons {
+        width: 90%;
+    }
+
+    .favorite-empty {
         width: 90%;
     }
 }

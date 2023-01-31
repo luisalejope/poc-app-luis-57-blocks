@@ -2,11 +2,11 @@
 import { onBeforeMount, ref, computed } from 'vue';
 import { useRoute } from 'vue-router'
 import IconHeart from '../components/icons/IconHeart.vue';
-import { moviesStore } from '@/stores/movies';
+import { useMovieStore } from '@/stores/movies';
 
 const route = useRoute();
 
-const movies = moviesStore();
+const movies = useMovieStore();
 const { getMovieByID } = movies;
 
 const movie = ref({})

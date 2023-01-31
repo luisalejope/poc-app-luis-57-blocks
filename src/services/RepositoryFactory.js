@@ -2,10 +2,10 @@ import ApiRepository from './ApiRepository';
 import AuthRepository from './AuthRepository';
 
 
-const repositories = {
+const services = {
   api: ApiRepository,
   auth: AuthRepository,
 };
 export default {
-  get: (name) => repositories[name],
+  get: (name) => services[name],
 };

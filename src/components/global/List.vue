@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router'
 import ItemList from './ItemList.vue';
-import { moviesStore } from '@/stores/movies';
+import { useMovieStore } from '@/stores/movies';
 
 const router = useRouter();
 
-const movies = moviesStore();
+const movies = useMovieStore();
 
 const { assignFavorite } = movies;
 
@@ -27,13 +27,10 @@ const handleSetFavorites = (id) => {
     const filtered = props.list.filter((m) => m.id === id)
     const movie = Object.assign({}, filtered[0]);
     movie.favorite = !movie.favorite;
-    const data = { movieSelected: movie, page: props.page }
-    console.log(data, 'list')
     assignFavorite(movie)
 }
 
 const goDetail = (id) => {
-    console.log(id)
     router.push(`/detail/${id}`)
 }
 </script>

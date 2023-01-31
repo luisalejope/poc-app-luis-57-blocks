@@ -3,16 +3,17 @@ import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
 import {useRouter} from 'vue-router';
 
-import { userStore } from '../stores/user'
+import { useUserStore } from '../stores/user'
 import IconEyeOpen from '../components/icons/IconEyeOpen.vue';
 import IconEyeClosed from '../components/icons/IconEyeClosed.vue';
 import Button from '../components/global/Button.vue';
+import Modal from '../components/global/Modal.vue';
 
 // ROUTER
 const router = useRouter();
 
 // STORES
-const store = userStore();
+const store = useUserStore();
 
 const { user, getUser } = storeToRefs(store)
 const { authenticateUser } = store
@@ -22,6 +23,7 @@ const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
 const errorSubmit = ref(false);
+const forgotModal = ref(false);
 
 // COMPUTED
 const emailSyntaxis = computed(()=>{
@@ -31,7 +33,6 @@ const emailSyntaxis = computed(()=>{
 
 const formCompleted = computed(()=> {
   const isCompleted = email.value.length > 0 && password.value.length > 0;
-  console.log(isCompleted && emailSyntaxis.value)
   return isCompleted && emailSyntaxis.value;
 })
 
@@ -45,13 +46,16 @@ const handleSubmit = () => {
       password: password.value
     }
     const response = authenticateUser(loginData);
-    console.log(response, 'login');
     if (!response) {
       errorSubmit.value = true; 
     } else {
       errorSubmit.value = false
       router.push('/home')
     }
+}
+
+const handleForgot = () => {
+  forgotModal.value = !forgotModal.value
 }
 </script>
 
@@ -73,13 +77,26 @@ const handleSubmit = () => {
       </div>
       <div class="login-button-flex mt-n">
         <div id="forgot-button-container" >
-          <Button button-type="link" text="Forgot password" />
+          <Button button-type="link" text="Forgot password" @action="handleForgot"/>
         </div>
         <div id="login-button-container" >
           <Button button-type="primary" text="LOGIN" :disabled="!formCompleted" @action="handleSubmit"/>
         </div>
       </div>
     </div>
+    <Modal v-show="forgotModal">
+      <template #content>
+        <div class="card-forgot">
+          <div class="close-forgot">
+            <div class="close-container">
+              <Button button-type="link" text="X" @action="handleForgot"/>
+            </div>
+          </div>
+          <p>&#9888;</p>
+          If you dont know your credentials, please go to the repository README.md
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -92,6 +109,31 @@ const handleSubmit = () => {
   justify-content: center;
   align-items: center;
 }
+.close-container{
+  width: 20px;
+}
+.card-forgot {
+  display: flex;
+  flex-direction: column;
+
+  width: 60%;
+  height: 190px;
+  background-color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+.close-forgot {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.card-forgot > p {
+  text-align: center;
+  color: rgb(228, 130, 2);
+  font-size: 30px;
+}
+
 .error-message {
   color: red;
   font-size: 1.2rem;

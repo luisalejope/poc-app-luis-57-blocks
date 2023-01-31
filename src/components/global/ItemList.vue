@@ -69,7 +69,7 @@ const handleDetail = () => emit('goDetail')
   width: 30px;
   height: 23px;
   cursor: pointer;
-  fill: rgb(0, 75, 173);;
+  fill: rgb(0, 75, 173);
 }
 
 #icon-heart:hover {

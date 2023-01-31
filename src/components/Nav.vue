@@ -2,15 +2,15 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { userStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user';
 import Button from './global/Button.vue';
 
 const route = useRoute();
 const router = useRouter();
-const userstore = userStore();
-const { user, userExist } = storeToRefs(userstore);
+const userStore = useUserStore();
+const { user, userExist } = storeToRefs(userStore);
 
-const { logout } = userstore;
+const { logout } = userStore;
 
 const routeLogin = computed(() => route.name === 'Login')
 
