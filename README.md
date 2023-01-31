@@ -41,12 +41,12 @@ yarn build
 ### When is running
 The users that can be used with the app are the following ones
 ```sh
-email:'tony@gmail.com', 
-password:'Jarvis25*',
+email:'brunodiaz@gmail.com', 
+password:'Martha25*',
 ```
 ```sh
-email:'tony@gmail.com', 
-password:'Jarvis25*',
+email:'klark@gmail.com', 
+password:'Lois25*',
 ```
 ```sh
 email:'tony@gmail.com', 

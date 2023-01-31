@@ -5,7 +5,6 @@ import { useMovieStore } from '@/stores/movies';
 import List from '../components/global/List.vue';
 import Button from '../components/global/Button.vue';
 
-
 const movies = useMovieStore();
 
 const { numberMovies, getAllMoviesByPage } = storeToRefs(movies);
