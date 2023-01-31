@@ -1,35 +1,74 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+*{
+  padding: 0;
+  margin: 0;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+body {
+  display: flex; 
+}
+input{
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+}
+input:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+#app{
+  width: 100%;
+}
+.template-app{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+@-webkit-keyframes bounce-in {
+  0% {
+      opacity: 0;
+      -webkit-transform: scale(.3);
+      transform: scale(.3);
+  }
+
+  50% {
+      opacity: 1;
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+  }
+
+  70% {
+      -webkit-transform: scale(0.9);
+      transform: scale(0.9);
+  }
+
+  100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+@keyframes bounce-in {
+  0% {
+      opacity: 0;
+      transform: scale(.3);
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  50% {
+      opacity: 1;
+      transform: scale(1.0);
+  }
+
+  70% {
+      transform: scale(0.9);
+  }
+
+  100% {
+      transform: scale(1);
   }
 }
