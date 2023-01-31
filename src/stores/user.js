@@ -13,6 +13,8 @@ export const userStore = defineStore('user', () => {
   // COMPUTED
   const getUser = computed(() => user.value)
 
+  const userExist = computed(() => Object.keys(user.value).length > 0)
+
   // METHODS
   function authenticateUser(data) {
     console.log(data)
@@ -30,7 +32,7 @@ export const userStore = defineStore('user', () => {
     return r;
   }
 
-  function userExist() {
+  function verifyUser() {
     const userLocal = JSON.parse(localStorage.getItem('user'));
     if (userLocal) {
       const exist = auth.userExists(userLocal.token);
@@ -38,8 +40,8 @@ export const userStore = defineStore('user', () => {
         localStorage.clear();
         return false;
       }
-      if (exist && Object.keys(user.value).length === 0) {
-        user.value = userLocal;
+      if (exist && userExist) {
+        user.value = userLocal
       }
       return true
     } else {
@@ -47,5 +49,10 @@ export const userStore = defineStore('user', () => {
     }
   }
 
-  return { user, getUser, authenticateUser, userExist }
+  function logout() {
+    user.value = Object.assign({}, user.value);
+    localStorage.clear();
+  }
+
+  return { user, getUser, authenticateUser, userExist, logout, verifyUser }
 })

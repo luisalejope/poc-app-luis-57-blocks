@@ -3,6 +3,7 @@ import { onBeforeMount, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia'
 import { moviesStore } from '@/stores/movies';
 import List from '../components/global/List.vue';
+import Button from '../components/global/Button.vue';
 
 
 const movies = moviesStore();
@@ -26,13 +27,31 @@ const handlePaginate = async (type) => {
 
 <template>
     <div id="home-movies">
+        <div class="container-buttons mt-l">
+            <div>
+                <Button button-type="secondary font-size-bg" text="&#9754;" @action="handlePaginate('back')"
+                    v-show="isVisibleBack" />
+            </div>
+            <h2 class="principal-title">
+                Favorite Movies
+            </h2>
+            <div>
+                <Button button-type="secondary font-size-bg " text="&#9755;" @action="handlePaginate('next')"
+                    v-show="isVisibleNext" />
+            </div>
+        </div>
         <List :list="getFavoritesByPage[numberPage - 1] || []" :page="numberPage" />
-        <button @click="handlePaginate('back')" v-show="isVisibleBack">
-            back
-        </button>
-        <button @click="handlePaginate('next')" v-show="isVisibleNext">
-            next
-        </button>
+        <div class="container-buttons">
+            <div>
+                <Button button-type="secondary font-size-bg" text="&#9754;" @action="handlePaginate('back')"
+                    v-show="isVisibleBack" />
+            </div>
+            <div />
+            <div>
+                <Button button-type="secondary font-size-bg" text="&#9755;" @action="handlePaginate('next')"
+                    v-show="isVisibleNext" />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -43,5 +62,20 @@ const handlePaginate = async (type) => {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.container-buttons {
+    display: grid;
+    width: 50%;
+    grid-template-columns: 40px auto 40px;
+}
+
+.principal-title {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container-buttons {
+        width: 90%;
+    }
 }
 </style>

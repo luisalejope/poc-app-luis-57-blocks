@@ -14,25 +14,26 @@ const loadStore = loaderStore();
 const userstore = userStore();
 
 const { getLoaderStatus } = storeToRefs(loadStore);
-const { getUser } = storeToRefs(userstore)
-const { userExist } = userstore;
+const { getUser, userExist, } = storeToRefs(userstore)
+const {verifyUser} = userstore
+
 
 // DATA
 const authenticated = ref(true)
 
 onBeforeMount(() => {
-  authenticated.value = userExist()
-  console.log('onbefore', authenticated.value)
-  if (!authenticated.value && router.currentRoute.value.name !== 'login') {
-    router.push('/login')
+  authenticated.value = userExist.value
+  console.log('onbefore', userExist.value)
+  if (!userExist.value) {
+     verifyUser()
   }
 })
 
 </script>
 
 <template>
-  <div id="poc-container">
-    <Nav v-show="Object.keys(getUser).length !== 0" />
+  <div id="poc-container" class="mb-xl">
+    <Nav />
     <RouterView />
     <Loader v-show="getLoaderStatus" />
   </div>

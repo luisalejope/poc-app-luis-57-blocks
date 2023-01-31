@@ -21,6 +21,7 @@ const { authenticateUser } = store
 const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
+const errorSubmit = ref(false);
 
 // COMPUTED
 const emailSyntaxis = computed(()=>{
@@ -38,6 +39,7 @@ const formCompleted = computed(()=> {
 const handleShowPass = () => showPassword.value = !showPassword.value;
 
 const handleSubmit = () => { 
+    errorSubmit.value = false
     const loginData = {
       email: email.value,
       password: password.value
@@ -45,8 +47,9 @@ const handleSubmit = () => {
     const response = authenticateUser(loginData);
     console.log(response, 'login');
     if (!response) {
-      console.log(response, 'error');
+      errorSubmit.value = true; 
     } else {
+      errorSubmit.value = false
       router.push('/home')
     }
 }
@@ -54,6 +57,7 @@ const handleSubmit = () => {
 
 <template>
   <div id="login">
+    <p class="error-message" v-show="errorSubmit">The email or the passwrord are incorrect</p>
     <div class="login-form">
       <label class="mb-s" for="email">Email</label>
       <div class="input-container">
@@ -87,6 +91,11 @@ const handleSubmit = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.error-message {
+  color: red;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 .login-form {
   display: flex;

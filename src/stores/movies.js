@@ -57,7 +57,7 @@ export const moviesStore = defineStore('movies', () => {
     for (let i = 0; i < arr.length; i += maxItems) {
       arrOfPages.push(arr.slice(i, i + maxItems));
     }
-    return JSON.parse(JSON.stringify(arrOfPages))
+    return arrOfPages
   }
 
   function assignFavorite(data) {
@@ -70,5 +70,11 @@ export const moviesStore = defineStore('movies', () => {
     })
   }
 
-  return { movies, numberMovies, numberFavorites, getAllMoviesByPage, getFavoritesByPage, requestMoviesByPage, assignFavorite }
+  function getMovieByID(id) {
+    console.log(typeof id)
+    const movieById =  movies.value.filter((movie) => movie.id === id)
+    return movieById[0];
+  }
+
+  return { numberMovies, numberFavorites, getAllMoviesByPage, getFavoritesByPage, requestMoviesByPage, assignFavorite, getMovieByID }
 })

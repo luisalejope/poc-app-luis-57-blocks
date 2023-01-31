@@ -1,25 +1,52 @@
 <script setup>
 import { computed } from 'vue';
-import { RouterLink } from 'vue-router'
-import desktopLogo from "../assets/logoPortafolio1.png";
+import { storeToRefs } from 'pinia'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { userStore } from '@/stores/user';
+import Button from './global/Button.vue';
 
+const route = useRoute();
+const router = useRouter();
+const userstore = userStore();
+const { user, userExist } = storeToRefs(userstore);
 
+const { logout } = userstore;
+
+const routeLogin = computed(()=> route.name === 'Login')
+
+const handleBackward = () => {
+    router.back()
+}
+
+const handleLogout = () =>{
+    logout()
+    router.push('/login')
+}
 
 </script>
 <template>
-    <header class="template-app">
+    <header class="template-app" v-if="userExist && !routeLogin">
         <div class="wrapper">
 
             <nav class="navContainer">
-                <div class="routes">
-
-                    <RouterLink class="linkNav" to="/home" exactActiveClass="active">
-                        Home
-                    </RouterLink>
-                    <RouterLink class="linkNav" to="/favorites" exactActiveClass="active">
-                        Favorites
-                    </RouterLink>
-
+                <div class="backwards-container" v-if="route.name === 'Detail'">
+                        <Button buttonType="primary font-size-bg" text="&#9754;" @action="handleBackward"/>    
+                        <h2>
+                            Detail
+                        </h2>
+                    </div>
+                <div class="routes" v-else>
+                    <div class="router-links">
+                        <RouterLink class="linkNav" to="/home" exactActiveClass="active">
+                            Home
+                        </RouterLink>
+                        <RouterLink class="linkNav" to="/favorites" exactActiveClass="active">
+                            Favorites
+                        </RouterLink>
+                    </div>
+                    <div class="logout-container">
+                        <Button buttonType="primary" text="Logout" @action="handleLogout"/>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -38,17 +65,32 @@ import desktopLogo from "../assets/logoPortafolio1.png";
     box-shadow: 0px 3px 13px -5px rgba(0, 0, 0, 0.42);
 }
 
+.backwards-container{
+    width: 120px;
+}
+
+.backwards-container > h2 {
+    margin-left: 1rem;
+}
+.logout-container{
+    width: 70px;
+}
 .navContainer {
     width: 90%;
     display: flex;
 }
 
-
-
-.routes {
+.router-links, .backwards-container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.routes {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .linkNav {
@@ -60,10 +102,10 @@ import desktopLogo from "../assets/logoPortafolio1.png";
 }
 
 .linkNav:hover {
-    color: #fe4066;
+    color: rgb(0, 75, 173);
 }
 
 .active {
-    color: #fe4066
+    color: rgb(0, 75, 173);
 }
 </style>

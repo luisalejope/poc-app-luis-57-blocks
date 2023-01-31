@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import HomeMovies from '../views/HomeMovies.vue'
 import FavoriteList from '../views/FavoriteList.vue'
+import Detail from '../views/Detail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,12 @@ const router = createRouter({
       name: 'Favorite List',
       meta: { requiresAuth: true },
       component: FavoriteList,
+    },
+    {
+      path: '/detail/:id',
+      name: 'Detail',
+      meta: { requiresAuth: true },
+      component: Detail,
     },
     {
       path: '/login',

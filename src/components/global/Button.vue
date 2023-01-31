@@ -21,7 +21,7 @@ const handleClick = () => emit('action')
 
 </script>
 <template >
-    <button id="button" :class="buttonType" :disabled="disabled" @click="handleClick">{{ text }}</button>
+    <button id="button" :class="`${buttonType} ${disabled && 'disabled'}`" :disabled="disabled" @click="handleClick">{{ text }}</button>
 </template>
 <style scoped>
 #button {
@@ -31,6 +31,10 @@ const handleClick = () => emit('action')
   cursor: pointer;
 }
 
+.disabled {
+    background-color: rgb(194, 194, 194) !important;
+}
+
 .primary {
     background-color: rgb(0, 75, 173);
     color: white;
@@ -38,6 +42,19 @@ const handleClick = () => emit('action')
 }
 .primary:hover {
     background-color: rgb(0, 103, 238);
+}
+
+.font-size-bg {
+    font-size: 30px;
+}
+
+.secondary {
+    background-color: rgb(160, 160, 160);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+}
+.secondary:hover {
+    background-color: rgb(150, 150, 150);
 }
 
 .link {

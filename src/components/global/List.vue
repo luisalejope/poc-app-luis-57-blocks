@@ -1,7 +1,10 @@
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router'
 import ItemList from './ItemList.vue';
 import { moviesStore } from '@/stores/movies';
+
+const router = useRouter();
 
 const movies = moviesStore();
 
@@ -28,13 +31,18 @@ const handleSetFavorites = (id) => {
     console.log(data, 'list')
     assignFavorite(movie)
 }
+
+const goDetail = (id) => {
+    console.log(id)
+    router.push(`/detail/${id}`)
+}
 </script>
 
 
 <template>
     <div class="list-container">
         <ItemList v-for=" item of list" :key="item.id" :title="item.title" :favorite="item.favorite" :id="item.id"
-            @action="handleSetFavorites" />
+            @action="handleSetFavorites" @goDetail="goDetail(item.id)"/>
     </div>
 </template>
 
