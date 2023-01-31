@@ -7,12 +7,12 @@
 </template>
 <style scoped>
 .modal {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
